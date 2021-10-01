@@ -2,11 +2,13 @@ import { META_DESCRIPTION } from '@lib/constants';
 import Page from '@components/page';
 import Layout from '@components/layout';
 import style from '../../styles/wiki.module.css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { google } from 'googleapis';
 
 
 export default function Wiki() {
+
+  const [titleList, setTitleList] = useState(['']);
 
   useEffect( () => {
     async function apiCall() {
@@ -20,6 +22,11 @@ export default function Wiki() {
         spreadsheetId: process.env.SHEET_ID,
         range
       });
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const [titles] = response.data.values;
+      setTitleList(titles);
     }
 
     void apiCall().then(r => console.log(r));
@@ -39,6 +46,7 @@ export default function Wiki() {
         </div>
 
 
+        <div>{titleList}</div>
       </Layout>
     </Page>
   );
