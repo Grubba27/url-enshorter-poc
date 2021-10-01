@@ -35,7 +35,9 @@ export default function Wiki() {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       const row = await sheet.loadCells('A1:A100');
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-call
       const titleArray = sheet._cells.map(cell => [cell[0]._rawData.formattedValue, cell[0]._row ]);
       setArrayTitles(titleArray);
 
