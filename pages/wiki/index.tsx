@@ -3,34 +3,46 @@ import Page from '@components/page';
 import Layout from '@components/layout';
 import style from '../../styles/wiki.module.css';
 import { useEffect, useState } from 'react';
-import { google } from 'googleapis';
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { GoogleSpreadsheet } = require('google-spreadsheet');
+
+import creds from '../../secrets.json';
 
 
 export default function Wiki() {
 
-  const [titleList, setTitleList] = useState(['']);
 
-  useEffect( () => {
+  const [arrayTitles, setArrayTitles] = useState([]);
+  useEffect(() => {
+
     async function apiCall() {
-      const auth = await google.auth.getClient({ scopes: ['https://www.googleapis.com/auth/spreadsheets'] });
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      const doc = new GoogleSpreadsheet('12f_LRVjsk-6b9hyzIBJSe3lhaYlwn-7Y6EVHsS7_Uog');
 
-      const sheets = google.sheets({ version: 'v4', auth });
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      await doc.useServiceAccountAuth(creds);
 
-      const range = `A1!A1`;
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      await doc.loadInfo();
 
-      const response = await sheets.spreadsheets.values.get({
-        spreadsheetId: process.env.SHEET_ID,
-        range
-      });
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      const [titles] = response.data.values;
-      setTitleList(titles);
+      const sheet = doc.sheetsByIndex[0];
+
+
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      const row = await sheet.loadCells('A1:A100');
+
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      const titleArray = sheet._cells.map(cell => [cell[0]._rawData.formattedValue, cell[0]._row ]);
+      setArrayTitles(titleArray);
+
     }
 
-    void apiCall().then(r => console.log(r));
-  });
+    void apiCall().then();
+  }, [arrayTitles]);
   const meta = {
     title: 'Wiki',
     description: META_DESCRIPTION
@@ -43,10 +55,12 @@ export default function Wiki() {
           <span>
             Please select an article to start reading
           </span>
+          {arrayTitles.map((item, index) =>
+            <p key={index}>{item[0] ? <>{item[0]} <a key={1000 + index} href={`wiki/${item[1]}`}>link</a></> : false}</p>
+          )}
         </div>
 
 
-        <div>{titleList}</div>
       </Layout>
     </Page>
   );

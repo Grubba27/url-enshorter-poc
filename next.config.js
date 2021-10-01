@@ -25,5 +25,16 @@ module.exports = {
       'localhost' // For Strapi
     ],
     imageSizes: [24, 64, 300]
+  },
+  webpack: config => {
+    config.node = {
+      ...config.node,
+      fs: 'empty',
+      child_process: 'empty',
+      net: 'empty',
+      dns: 'empty',
+      tls: 'empty',
+    };
+    return config;
   }
 };
