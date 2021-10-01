@@ -57,11 +57,13 @@ export default function Wiki() {
           <span>
             Please select an article to start reading
           </span>
+        </div>
+
+        <div className={style.wikiList}>
           {arrayTitles.map((item, index) =>
             <p key={index}>{item[0] ? <>{item[0]} <a key={1000 + index} href={`wiki/${item[1]}`}>link</a></> : false}</p>
           )}
         </div>
-
 
       </Layout>
     </Page>
