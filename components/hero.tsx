@@ -112,7 +112,7 @@ export default function Hero() {
           <button onClick={appendSite} className={styleUtils.myButton}> Create Url</button>
 
         </p>
-        <div>
+        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           {redirectUrl ? <>
             <br/>
             <strong>Copy your URL</strong>
