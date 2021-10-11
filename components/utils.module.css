@@ -15,78 +15,147 @@
  */
 
 .appear {
-  opacity: 0;
-  animation: appear 0.8s cubic-bezier(0.1, 0, 0.175, 1) forwards;
+    opacity: 0;
+    animation: appear 0.8s cubic-bezier(0.1, 0, 0.175, 1) forwards;
 }
 
 .appear-first {
-  animation-delay: 0.4s;
+    animation-delay: 0.4s;
 }
 
 .appear-second {
-  animation-delay: 0.8s;
+    animation-delay: 0.8s;
 }
 
 .appear-third {
-  animation-delay: 1.2s;
+    animation-delay: 1.2s;
 }
 
 .appear-fourth {
-  animation-delay: 1.6s;
+    animation-delay: 1.6s;
 }
 
 .appear-fifth {
-  animation-delay: 2s;
+    animation-delay: 2s;
 }
 
 .appear-sixth {
-  animation-delay: 2.4s;
+    animation-delay: 2.4s;
 }
 
 @keyframes appear {
-  to {
-    opacity: 1;
-  }
+    to {
+        opacity: 1;
+    }
 }
 
 @media (min-width: 1200px) {
-  .hide-on-desktop {
-    display: none;
-  }
+    .hide-on-desktop {
+        display: none;
+    }
 }
 
 .show-on-mobile {
-  display: block;
+    display: block;
 }
 
 .hide-on-mobile {
-  display: none;
+    display: none;
 }
 
 @media (min-width: 768px) {
-  .show-on-mobile {
-    display: none;
-  }
+    .show-on-mobile {
+        display: none;
+    }
 
-  .hide-on-mobile {
-    display: block;
-  }
+    .hide-on-mobile {
+        display: block;
+    }
 }
 
 .hide-on-tablet {
-  display: block;
+    display: block;
 }
 
 .show-on-tablet {
-  display: none;
+    display: none;
 }
 
 @media (max-width: 1199px) and (min-width: 768px) {
-  .show-on-tablet {
-    display: block;
-  }
+    .show-on-tablet {
+        display: block;
+    }
 
-  .hide-on-tablet {
-    display: none;
-  }
+    .hide-on-tablet {
+        display: none;
+    }
+}
+
+
+.container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: rgb(95, 41, 142);
+    background: linear-gradient(90deg, rgba(95, 41, 142, 1) 0%, rgba(54, 23, 125, 1) 48%, rgba(14, 20, 25, 1) 100%);
+}
+
+.loginbox {
+    width: 30rem;
+    height: 25rem;
+    position: absolute;
+    border-radius: 20px;
+    background: rgb(51, 83, 106);
+    background: linear-gradient(
+            23deg,
+            rgb(14, 13, 13) 0%,
+            rgb(0, 0, 0) 34%,
+            rgb(21, 12, 41) 91%,
+            rgb(0, 0, 0) 100%
+    );
+    box-shadow: 0 0 38px -12px rgba(255, 255, 255, 0.56);
+    -webkit-box-shadow: 0 0 38px -12px rgba(255, 255, 255, 0.56);
+    -moz-box-shadow: 0 0 38px -12px rgba(255, 255, 255, 0.56);
+}
+
+
+.myInput {
+    position: relative;
+    font-size: 16px;
+    width: 80%;
+    left: 10%;
+    right: 10%;
+    color: rgb(255, 255, 255);
+    margin-bottom: 30px;
+    margin-top: 26px;
+    padding-top: 15px;
+
+    border: none;
+    border-bottom: 1px solid #fff;
+    outline: none;
+    background: transparent;
+}
+
+.myInput:focus {
+    border: none;
+    border-bottom: 3px solid #fff;
+    outline: none;
+    background: transparent;
+}
+
+
+
+
+.myButton {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.589);
+    color: white;
+    border-radius: 13px;
+    padding: 7px 20px;
+    font-size: 20px;
+    position: relative;
+    left: 10%;
+    margin-top: 5%;
 }
