@@ -113,12 +113,15 @@ export default function Hero() {
 
         </p>
         <div>
-          <br/>
-          <strong>Copy your URL</strong>
-          <br />
-          <strong>{redirectUrl}</strong>
-          <br/>
-          <button onClick={copyToClipBoard} className={styleUtils.myButton}> Copy to clipboard</button>
+          {redirectUrl ? <>
+            <br/>
+            <strong>Copy your URL</strong>
+            <br />
+            <strong>{redirectUrl}</strong>
+            <br/>
+            <button onClick={copyToClipBoard} className={styleUtils.myButton}> Copy to clipboard</button>
+          </> : <> </>}
+
         </div>
       </div>
     </div>

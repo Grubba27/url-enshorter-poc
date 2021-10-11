@@ -56,10 +56,6 @@ export const NAVIGATION = [
     name: 'Jobs',
     route: '/jobs'
   },
-  {
-    name:  'Wiki',
-    route: '/wiki'
-  }
 ];
 
 export type TicketGenerationState = 'default' | 'loading';
