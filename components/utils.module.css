@@ -131,7 +131,6 @@
     margin-bottom: 30px;
     margin-top: 26px;
     padding-top: 15px;
-
     border: none;
     border-bottom: 1px solid #fff;
     outline: none;
@@ -158,4 +157,5 @@
     position: relative;
     left: 10%;
     margin-top: 5%;
+    cursor: pointer;
 }

@@ -27,32 +27,51 @@ const { GoogleSpreadsheet } = require('google-spreadsheet');
 export default function Hero() {
 
   const [bigUrl, setBigUrl] = useState('');
-
+  const [redirectUrl, setRedirectUrl] = useState('');
   const typeEvent = (e: React.FormEvent<HTMLInputElement>) => {
     setBigUrl(e.currentTarget.value);
   }
 
-  useEffect(() => {
+  const appendSite = async () => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    const doc = new GoogleSpreadsheet('12f_LRVjsk-6b9hyzIBJSe3lhaYlwn-7Y6EVHsS7_Uog');
 
-    async function createUrl() {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-      const doc = new GoogleSpreadsheet('12f_LRVjsk-6b9hyzIBJSe3lhaYlwn-7Y6EVHsS7_Uog');
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    await doc.useServiceAccountAuth(creds);
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-      await doc.useServiceAccountAuth(creds);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    await doc.loadInfo();
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-      await doc.loadInfo();
+    const sheet = doc.sheetsByIndex[1];
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    const siteUrl = getValidUrl(bigUrl);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    const returned = await sheet.addRow({url: siteUrl});
 
+    const url = `${window.location.href}${returned._rowNumber}`;
+    setRedirectUrl(url)
+  }
+   const getValidUrl = (url = "") => {
+    let newUrl = window.decodeURIComponent(url);
+    newUrl = newUrl.trim().replace(/\s/g, "");
 
-      const sheet = doc.sheetsByIndex[1];
-
-      console.log(sheet.title);
+    if(/^(:\/\/)/.test(newUrl)){
+      return `http${newUrl}`;
+    }
+    if(!/^(f|ht)tps?:\/\//i.test(newUrl)){
+      return `http://${newUrl}`;
     }
 
-
-    void createUrl().then();
-  });
+    return newUrl;
+  };
+  const copyToClipBoard = async () => {
+    if (redirectUrl !== ''){
+      await navigator.clipboard.writeText(redirectUrl);
+      alert('Text copied')
+    }
+  }
 
   return (
     <div className={styles.wrapper}>
@@ -82,18 +101,25 @@ export default function Hero() {
       </h2>
       <div className={cn(styleUtils.appear, styleUtils['appear-fourth'], styles.info)}>
         <p>
-          <strong>And free url-shorter</strong>
+          <strong>Also url-shorter</strong>
           <br />
-          <strong>Type your big url</strong>
-          <br />
-          <input className={styleUtils.myInput} id={'movie'} name={'movie'}
+          <input className={styleUtils.myInput} id={'url'} name={'url'}
                  required={true}
                  placeholder={'Type your big url'}
                  type={'text'} value={bigUrl}
                  onInput={e => typeEvent(e)} />
           <br/>
-          <button className={styleUtils.myButton}> Create Url</button>
+          <button onClick={appendSite} className={styleUtils.myButton}> Create Url</button>
+
         </p>
+        <div>
+          <br/>
+          <strong>Copy your URL</strong>
+          <br />
+          <strong>{redirectUrl}</strong>
+          <br/>
+          <button onClick={copyToClipBoard} className={styleUtils.myButton}> Copy to clipboard</button>
+        </div>
       </div>
     </div>
   );
